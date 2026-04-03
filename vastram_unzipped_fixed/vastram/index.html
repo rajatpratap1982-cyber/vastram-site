@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vastram — Indian Ethnic Wear | Sarees, Lehengas, Kurtas</title>
+  <meta name="description" content="Shop premium Indian ethnic wear — Banarasi silk sarees, bridal lehengas, kurta sets, sherwanis and more. Free shipping above ₹999." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    /* ── Page-specific styles ──────────────────────────────── */
+
+    /* Hero */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+    .hero__content {
+      background: var(--crimson-bg); padding: 60px 40px 60px 20px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hero__eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--crimson-mid); font-weight: 500; margin-bottom: 14px;
+    }
+    .hero__eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--crimson-mid); }
+    .hero__title {
+      font-family: var(--font-display); font-size: 48px; font-weight: 700;
+      color: var(--crimson-dark); line-height: 1.1; margin-bottom: 18px;
+    }
+    .hero__title em { font-style: italic; color: var(--crimson); }
+    .hero__desc { font-size: 14px; color: var(--coral-mid); line-height: 1.8; max-width: 340px; margin-bottom: 32px; }
+    .hero__btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero__visual {
+      background: var(--coral-light); display: flex; align-items: flex-end;
+      justify-content: center; overflow: hidden; position: relative;
+    }
+    /* CSS silhouette shapes representing draped garments */
+    .hero__silhouette {
+      position: relative; width: 100%; height: 100%;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .sil-main  { width: 160px; height: 310px; background: var(--coral); border-radius: 80px 80px 0 0; opacity: .32; z-index: 2; }
+    .sil-back  { position: absolute; width: 100px; height: 210px; background: var(--coral-mid); border-radius: 50px 50px 0 0; right: 80px; bottom: 0; opacity: .2; }
+    .sil-front { position: absolute; width: 70px; height: 150px; background: var(--coral); border-radius: 35px 35px 0 0; left: 60px; bottom: 0; opacity: .18; }
+    .hero__caption {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; letter-spacing: .08em; color: #7a3820; white-space: nowrap;
+    }
+    /* Hero dots */
+    .hero-dots { display: flex; justify-content: center; gap: 7px; padding: 14px; background: var(--bg-primary); }
+    .hero-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-mid); transition: all .3s; }
+    .hero-dot.active { background: var(--crimson-mid); width: 22px; border-radius: 4px; }
+
+    /* Categories */
+    .cats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .cat-card {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 22px 12px 18px; text-align: center; cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .cat-card:hover { border-color: var(--crimson-mid); box-shadow: var(--shadow-sm); }
+    .cat-card__img { height: 60px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 12px; }
+    /* CSS garment shapes per category */
+    .shape-saree  { width: 30px; height: 52px; background: var(--crimson-mid); border-radius: 15px 15px 0 0; opacity: .65; }
+    .shape-leh    { width: 50px; height: 44px; background: #D4537E; border-radius: 50% 50% 0 0; opacity: .65; }
+    .shape-suit   { width: 28px; height: 50px; background: var(--teal-mid); border-radius: 6px 6px 0 0; opacity: .65; }
+    .shape-kurta  { width: 32px; height: 50px; background: var(--gold); border-radius: 8px 8px 0 0; opacity: .65; }
+    .shape-sher   { width: 30px; height: 52px; background: #7F77DD; border-radius: 6px 6px 0 0; opacity: .65; }
+    .shape-kids   { width: 24px; height: 38px; background: #378ADD; border-radius: 12px 12px 0 0; opacity: .65; }
+    .cat-card__name  { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .cat-card__count { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; }
+
+    /* Festival Banner */
+    .fest-banner {
+      background: var(--teal-dark); border-radius: var(--radius-xl);
+      padding: 44px 36px; display: flex; align-items: center;
+      justify-content: space-between; position: relative; overflow: hidden;
+    }
+    .fest-banner__decor {
+      position: absolute; right: 200px; top: 50%; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .decor-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 1px solid rgba(159,225,203,.18); position: absolute;
+    }
+    .fest-banner__content {}
+    .fest-banner__eyebrow { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-pale); font-weight: 500; margin-bottom: 10px; }
+    .fest-banner__title {
+      font-family: var(--font-display); font-size: 36px; font-weight: 700;
+      color: var(--teal-light); line-height: 1.1; margin-bottom: 10px;
+    }
+    .fest-banner__desc { font-size: 13px; color: var(--teal-pale); margin-bottom: 24px; }
+    .fest-banner__stats { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+    .fest-stat {
+      background: rgba(255,255,255,.08); border-radius: var(--radius-md);
+      padding: 14px 22px; text-align: center;
+    }
+    .fest-stat__num { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--teal-light); }
+    .fest-stat__label { font-size: 11px; color: var(--teal-pale); margin-top: 2px; }
+
+    /* Products grid */
+    .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* Product image color backgrounds */
+    .img-coral  { background: var(--crimson-bg); }
+    .img-pink   { background: #FBEAF0; }
+    .img-teal   { background: var(--teal-light); }
+    .img-gold   { background: var(--gold-light); }
+    .prod-img-h { height: 220px; }
+    .prod-sil-1 { width: 44px; height: 130px; background: var(--coral); border-radius: 22px 22px 0 0; opacity: .42; }
+    .prod-sil-2 { width: 68px; height: 108px; background: #D4537E; border-radius: 50% 50% 0 0; opacity: .4; }
+    .prod-sil-3 { width: 36px; height: 122px; background: var(--teal-mid); border-radius: 18px 18px 0 0; opacity: .42; }
+    .prod-sil-4 { width: 46px; height: 114px; background: var(--gold); border-radius: 8px 8px 0 0; opacity: .4; }
+    .sec-head-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; }
+    .sec-head-row .view-all { font-size: 13px; color: var(--crimson-mid); font-weight: 500; transition: opacity .2s; }
+    .sec-head-row .view-all:hover { opacity: .7; }
+
+    /* Newsletter */
+    .nl-section {
+      background: var(--crimson-bg); padding: 56px 20px; text-align: center;
+    }
+    .nl-section .sec-title { font-size: 36px; color: var(--crimson-dark); }
+    .nl-section .sec-sub { font-size: 14px; color: var(--coral-mid); margin-bottom: 28px; }
+    .nl-form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; }
+    .nl-form input {
+      flex: 1; height: 44px; border: 1px solid var(--crimson-border);
+      border-radius: var(--radius-md); padding: 0 16px; font-size: 13px;
+      font-family: var(--font-body); background: #fff; color: var(--text-primary);
+    }
+    .nl-form input:focus { border-color: var(--crimson); }
+    .nl-note { font-size: 11px; color: var(--coral-mid); margin-top: 10px; opacity: .8; }
+
+    /* Responsive overrides */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero__visual { min-height: 260px; }
+      .hero__content { padding: 40px 20px; }
+      .hero__title { font-size: 36px; }
+      .cats-grid { grid-template-columns: repeat(3, 1fr); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .fest-banner { flex-direction: column; gap: 24px; }
+      .fest-banner__stats { flex-direction: row; }
+    }
+    @media (max-width: 600px) {
+      .cats-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero__title { font-size: 30px; }
+      .nl-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Promo Bar ─────────────────────────────────────────── -->
+  <div class="promo-bar" role="banner">
+    Free shipping above ₹999
+    <span class="sep">|</span>
+    New: <strong>Navratri Collection</strong> is live
+    <span class="sep">|</span>
+    Use <strong>ETHNIC10</strong> for 10% off
+  </div>
+
+  <!-- ── Navbar ────────────────────────────────────────────── -->
+  <header class="navbar" role="navigation">
+    <div class="navbar-inner container">
+      <a href="index.html" class="nav-logo" aria-label="Vastram home">VAS<span>T</span>RAM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#" class="active">Women</a>
+        <a href="#">Men</a>
+        <a href="#">Kids</a>
+        <a href="#">Bridal</a>
+        <a href="#">Accessories</a>
+        <a href="#" class="sale">Sale</a>
+      </nav>
+      <div class="nav-search" role="search">
+        <input type="search" placeholder="Search sarees, lehengas, kurtas…" aria-label="Search products" />
+        <button aria-label="Search">&#128269;</button>
+      </div>
+      <div class="nav-icons">
+        <button class="nav-icon" aria-label="Wishlist">&#9825;</button>
+        <button class="nav-icon" aria-label="Account">&#128100;</button>
+        <a href="#" class="nav-icon" aria-label="Cart, 3 items">
+          &#128722;
+          <span class="badge" aria-label="3 items">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Hero ────────────────────────────────────────────── -->
+    <section class="hero" aria-label="Featured collection">
+      <div class="hero__content">
+        <div class="hero__eyebrow">Wedding Season 2026</div>
+        <h1 class="hero__title">
+          Dress for the<br>
+          <em>Moments</em><br>
+          that Matter
+        </h1>
+        <p class="hero__desc">Handpicked bridal lehengas, Banarasi silks and ceremonial sherwanis — woven with India's finest craft traditions.</p>
+        <div class="hero__btns">
+          <a href="#" class="btn btn-primary">Shop Bridal Edit</a>
+          <a href="#" class="btn btn-outline">Explore All →</a>
+        </div>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__silhouette">
+          <div class="sil-front"></div>
+          <div class="sil-main"></div>
+          <div class="sil-back"></div>
+        </div>
+        <p class="hero__caption">Bridal Lehenga Collection 2026</p>
+      </div>
+    </section>
+    <div class="hero-dots" role="tablist" aria-label="Carousel navigation">
+      <button class="hero-dot active" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+      <button class="hero-dot" role="tab" aria-selected="false" aria-label="Slide 2"></button>
+      <button class="hero-dot" role="tab" aria-selected="false" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- ── Categories ──────────────────────────────────────── -->
+    <section class="section-gap" aria-labelledby="cats-heading">
+      <div class="container">
+        <div class="text-center" style="margin-bottom:32px">
+          <div class="sec-eyebrow">Browse</div>
+          <h2 class="sec-title" id="cats-heading">Shop by Category</h2>
+          <p class="sec-sub">From everyday kurtis to grand bridal ensembles</p>
+        </div>
+        <div class="cats-grid">
+          <a href="#" class="cat-card">
+            <div class="cat-card__img"><div class="shape-saree" aria-hidden="true"></div></div>
+            <div class="cat-card__name">Sarees</div>
+            <div class="cat-card__count">2,400+ styles</div>
+          </a>
+          <a href="#" class="cat-card">
+            <div class="cat-card__img"><div class="shape-leh" aria-hidden="true"></div></div>
+            <div class="cat-card__name">Lehengas</div>
+            <div class="cat-card__count">890 styles</div>
+          </a>
+          <a href="#" class="cat-card">
+            <div class="cat-card__img"><div class="shape-suit" aria-hidden="true"></div></div>
+            <div class="cat-card__name">Suits &amp; Kurtas</div>
+            <div class="cat-card__count">1,700+ styles</div>
+          </a>
+          <a href="#" class="cat-card">
+            <div class="cat-card__img"><div class="shape-kurta" aria-hidden="true"></div></div>
+            <div class="cat-card__name">Men's Wear</div>
+            <div class="cat-card__count">640 styles</div>
+          </a>
+          <a href="#" class="cat-card">
+            <div class="cat-card__img"><div class="shape-sher" aria-hidden="true"></div></div>
+            <div class="cat-card__name">Sherwanis</div>
+            <div class="cat-card__count">320 styles</div>
+          </a>
+          <a href="#" class="cat-card">
+            <div class="cat-card__img"><div class="shape-kids" aria-hidden="true"></div></div>
+            <div class="cat-card__name">Kids' Ethnic</div>
+            <div class="cat-card__count">480 styles</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Festival Banner ─────────────────────────────────── -->
+    <section class="container" style="margin-bottom:52px" aria-label="Festival collection">
+      <div class="fest-banner">
+        <div class="fest-banner__decor" aria-hidden="true">
+          <div class="decor-ring" style="top:-20px;left:-20px"></div>
+          <div class="decor-ring" style="width:50px;height:50px;top:20px;left:20px"></div>
+        </div>
+        <div class="fest-banner__content">
+          <div class="fest-banner__eyebrow">Navratri 2026 — Collection Now Live</div>
+          <h2 class="fest-banner__title">Festival Ready.<br>India Proud.</h2>
+          <p class="fest-banner__desc">Bandhani lehengas, chaniya cholis &amp; embroidered sets for every garba night.</p>
+          <a href="#" class="btn btn-teal">Shop Festive Collection</a>
+        </div>
+        <div class="fest-banner__stats" aria-label="Quick facts">
+          <div class="fest-stat">
+            <div class="fest-stat__num">₹999</div>
+            <div class="fest-stat__label">Starts from</div>
+          </div>
+          <div class="fest-stat">
+            <div class="fest-stat__num">7 days</div>
+            <div class="fest-stat__label">Easy returns</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── New Arrivals ─────────────────────────────────────── -->
+    <section class="section-gap" style="padding-top:0" aria-labelledby="arrivals-heading">
+      <div class="container">
+        <div class="sec-head-row">
+          <div>
+            <div class="sec-eyebrow">Just Landed</div>
+            <h2 class="sec-title" id="arrivals-heading">New Arrivals</h2>
+          </div>
+          <a href="#" class="view-all">View all →</a>
+        </div>
+        <div class="products-grid">
+
+          <article class="product-card">
+            <div class="product-card__img img-coral prod-img-h">
+              <span class="product-card__img-badge pill pill-new">New</span>
+              <button class="product-card__wish" aria-label="Add to wishlist">&#9825;</button>
+              <div class="prod-sil-1" aria-hidden="true"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">Crimson Banarasi Silk Saree</h3>
+              <p class="product-card__sub">Gold zari border · Bridal</p>
+              <div class="product-card__price-row">
+                <span class="product-card__price">₹8,499</span>
+                <span class="product-card__orig">₹12,000</span>
+                <span class="product-card__off">29% off</span>
+              </div>
+              <a href="product.html" class="product-card__add">View product →</a>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-card__img img-pink prod-img-h">
+              <span class="product-card__img-badge pill pill-trend">Trending</span>
+              <button class="product-card__wish" aria-label="Add to wishlist">&#9825;</button>
+              <div class="prod-sil-2" aria-hidden="true"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">Emerald Bridal Lehenga Choli</h3>
+              <p class="product-card__sub">Zardozi embroidery · Wedding</p>
+              <div class="product-card__price-row">
+                <span class="product-card__price">₹22,999</span>
+                <span class="product-card__orig">₹34,000</span>
+                <span class="product-card__off">32% off</span>
+              </div>
+              <button class="product-card__add">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-card__img img-teal prod-img-h">
+              <button class="product-card__wish" aria-label="Add to wishlist">&#9825;</button>
+              <div class="prod-sil-3" aria-hidden="true"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">Teal Chikankari Suit Set</h3>
+              <p class="product-card__sub">Georgette · Festive casual</p>
+              <div class="product-card__price-row">
+                <span class="product-card__price">₹3,299</span>
+                <span class="product-card__orig">₹4,500</span>
+                <span class="product-card__off">27% off</span>
+              </div>
+              <button class="product-card__add">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-card__img img-gold prod-img-h">
+              <span class="product-card__img-badge pill pill-new" style="background:var(--gold);color:#fff">Best Seller</span>
+              <button class="product-card__wish" aria-label="Add to wishlist">&#9825;</button>
+              <div class="prod-sil-4" aria-hidden="true"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">Mustard Kurta Pajama Set</h3>
+              <p class="product-card__sub">Cotton · Men's festive</p>
+              <div class="product-card__price-row">
+                <span class="product-card__price">₹1,899</span>
+                <span class="product-card__orig">₹2,800</span>
+                <span class="product-card__off">32% off</span>
+              </div>
+              <button class="product-card__add">Add to cart</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Trust Strip ─────────────────────────────────────── -->
+    <div class="trust-strip container" style="margin-bottom:52px">
+      <div class="trust-item">
+        <div class="trust-item__icon" aria-hidden="true">🚚</div>
+        <div class="trust-item__title">Free Shipping</div>
+        <div class="trust-item__sub">On orders above ₹999</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-item__icon" aria-hidden="true">↩</div>
+        <div class="trust-item__title">Easy Returns</div>
+        <div class="trust-item__sub">7-day hassle-free policy</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-item__icon" aria-hidden="true">🔒</div>
+        <div class="trust-item__title">Secure Payments</div>
+        <div class="trust-item__sub">UPI, Cards, COD, EMI</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-item__icon" aria-hidden="true">💬</div>
+        <div class="trust-item__title">WhatsApp Support</div>
+        <div class="trust-item__sub">Mon–Sat, 9am–7pm</div>
+      </div>
+    </div>
+
+    <!-- ── Newsletter ───────────────────────────────────────── -->
+    <section class="nl-section" aria-labelledby="nl-heading">
+      <div class="sec-eyebrow">Stay Updated</div>
+      <h2 class="sec-title" id="nl-heading">Stay Ahead of Every Festive Season</h2>
+      <p class="sec-sub">New collections, exclusive drops and styling guides — straight to your inbox.</p>
+      <form class="nl-form" id="nl-form" novalidate aria-label="Email subscription">
+        <input type="email" placeholder="Enter your email address" required aria-label="Email address" />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+      <p class="nl-note">No spam. Unsubscribe anytime.</p>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-main container">
+      <div class="footer-brand">
+        <div class="footer-brand__logo">VAS<span>T</span>RAM</div>
+        <p class="footer-brand__desc">India's curated ethnic fashion destination — celebrating craft, culture and contemporary style since 2020.</p>
+        <div class="footer-social" aria-label="Social media links">
+          <a href="#" aria-label="Instagram">in</a>
+          <a href="#" aria-label="Facebook">fb</a>
+          <a href="#" aria-label="YouTube">yt</a>
+          <a href="#" aria-label="WhatsApp">wa</a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Women's categories">
+        <h4>Women</h4>
+        <a href="#">Sarees</a>
+        <a href="#">Lehengas</a>
+        <a href="#">Suits &amp; Kurtis</a>
+        <a href="#">Dupattas</a>
+        <a href="#">Bridal Edit</a>
+      </nav>
+      <nav class="footer-col" aria-label="Men's categories">
+        <h4>Men</h4>
+        <a href="#">Kurta Pajama</a>
+        <a href="#">Sherwanis</a>
+        <a href="#">Nehru Jackets</a>
+        <a href="#">Pathani Suits</a>
+        <a href="#">Accessories</a>
+      </nav>
+      <nav class="footer-col" aria-label="Help and policies">
+        <h4>Help</h4>
+        <a href="#">Size Guide</a>
+        <a href="#">Returns &amp; Exchange</a>
+        <a href="#">Track Order</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+      </nav>
+    </div>
+    <div class="footer-bottom container">
+      <span>© 2026 Vastram Technologies Pvt. Ltd. · GST: 09ABCDE1234F1Z5 · Grievance Officer: legal@vastram.in</span>
+      <div class="footer-pay" aria-label="Accepted payment methods">
+        <span>UPI</span><span>VISA</span><span>MC</span><span>COD</span><span>EMI</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
